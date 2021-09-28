@@ -1,0 +1,83 @@
+<template>
+  <Layout>
+    <div class="my-pdfs w-full relative pb-20">
+      <!-- content start -->
+      <div class="mb-2 grid grid-cols-2 gap-4">
+        <div
+          class="bg-white shadow rounded-md h-36"
+          v-for="graphic in graphics"
+          :key="graphic"
+        >
+          <div class="">
+            <router-link
+              :to="{ name: 'previewGraphic', params: { id: graphic.id } }"
+            >
+              <div class="rounded-lg relative">
+                <img
+                  :src="graphic.thumb"
+                  class="w-full contain rounded-lg h-36"
+                />
+                <div
+                  class="
+                    absolute
+                    bottom-0
+                    right-0
+                    text-white
+                    px-3
+                    py-1
+                    rounded
+                    flex
+                    gap-1
+                    items-center
+                  "
+                  v-if="graphic.total_downloads > 0"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                    />
+                  </svg>
+                  {{ graphic.total_downloads }}
+                </div>
+              </div>
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Layout>
+</template>
+
+<script>
+import Graphic from "../../apis/Graphic";
+import Layout from "../../Layout/layout.vue";
+
+export default {
+  components: { Layout },
+  data() {
+    return {
+      graphics: [],
+    };
+  },
+  methods: {
+    async fetchData() {
+      Graphic.all().then((response) => {
+        this.graphics = response.data;
+        console.log(response.data);
+      });
+    },
+  },
+  mounted() {
+    this.fetchData();
+  },
+};
+</script>
