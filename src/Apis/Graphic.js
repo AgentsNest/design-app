@@ -1,8 +1,8 @@
 import Api from "./Api";
 
 export default {
-  all() {
-    return Api().get("/graphics");
+  all(page) {
+    return Api().get(`/graphics?page=${page}`);
   },
 
   downloadCount(graphic, form) {

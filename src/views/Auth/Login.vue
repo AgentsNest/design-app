@@ -89,9 +89,9 @@ export default {
   data() {
     return {
       form: {
-        email: "vimal@gmail.com",
-        password: "password",
-        device_name: "browser",
+        email: "",
+        password: "",
+        device_name: "mobile",
       },
       errors: [],
       secure: false,

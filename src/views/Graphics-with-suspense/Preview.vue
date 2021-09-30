@@ -1,30 +1,37 @@
 <template>
   <div class="h-screen w-full">
-    <div class="flex flex-row-reverse items-center justify-between px-5 py-4 absolute top-0 right-0 w-4/5">
-      <div class="flex items-center gap-10">
-        <div class="flex flex-col items-center gap-2">
-          <label for="toggle" class="text-xs text-gray-700">Icons</label>
-          <label class="switch">
-            <input type="checkbox" @click="toggleIcons" />
-            <div class="slider round"></div>
-          </label>
-        </div>
-        <div class="flex flex-col items-center gap-2">
-          <div class="flex items-center gap-3">
-            <label for="toggle" class="text-xs text-gray-700">Frame Color</label>
-            <input type="color" v-model="frameColor" class="w-5 h-5" />
-          </div>
+    <div class="flex items-center justify-between mb-5 p-4">
+      <button class="flex items-center gap-2" @click="$router.go(-1)">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          />
+        </svg>
+      </button>
+      <div class="flex items-center gap-12">
+        <div class="flex items-center gap-2">
           <label class="switch">
             <input type="checkbox" @click="toggleFrame" />
             <div class="slider round"></div>
           </label>
+          <label for="toggle" class="text-xs text-gray-700">Frame</label>
+          <input type="color" v-model="frameColor" class="rounded w-6 h-6" />
         </div>
-        <div class="flex items-center flex-col gap-2">
-          <label for="toggle" class="text-xs text-gray-700">Logo</label>
+        <div class="flex items-center gap-2">
           <label class="switch">
             <input type="checkbox" checked @click="toggleLogo" />
             <div class="slider round"></div>
           </label>
+          <label for="toggle" class="text-xs text-gray-700">Logo</label>
         </div>
       </div>
     </div>
@@ -41,20 +48,17 @@
           <img :src="design.image" :alt="design.title" class="w-full" />
           <img
             :src="agent.brand_logo"
+            class="absolute top-2 left-2 w-32"
             id="logo"
-            class="absolute"
-            :class="design.brand_logo"
             v-show="!hideLogo"
           />
-
           <div class="bottom-2 absolute w-full">
             <div
               class="
                 w-3/4
                 mx-auto
                 bg-white
-                border-dotted border-gray-300 border
-                rounded
+                border-dotted border-gray-500 border
                 flex
                 justify-between
                 items-center
@@ -63,23 +67,36 @@
                 bottom-detail
               "
             >
-              <div class="flex items-center gap-1 text-gray-700" v-if="agent.email">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2" v-if="iconToggle"
-                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                  />
-                </svg>
-                {{ agent.email }}
-              </div>
-              <div class="flex items-center gap-1 text-gray-700" v-if="!agent.website" >
+              <div
+                class="text-gray-800 flex items-center gap-1"
+                v-if="agent.email"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-3 w-3"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  v-if="iconToggle"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+                  />
+                </svg>
+                {{ agent.email }}
+              </div>
+              <div
+                class="text-gray-800 flex items-center gap-1"
+                v-if="agent.website"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-3 w-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
                   <path
                     stroke-linecap="round"
@@ -90,14 +107,16 @@
                 </svg>
                 www.happybuying.com
               </div>
-              <div class="flex items-center gap-1 text-gray-700" v-if="agent.contact">
+              <div
+                class="text-gray-800 flex items-center gap-1"
+                v-if="agent.contact"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-3 w-3"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  v-if="iconToggle"
                 >
                   <path
                     stroke-linecap="round"
@@ -165,16 +184,15 @@ import html2canvas from "html2canvas";
 import { Filesystem, Directory } from "@capacitor/filesystem";
 
 export default {
-  props:['design', 'single'],
   data() {
     return {
+      design: {},
       agent: {},
       downloadBtn: "DOWNLOAD",
       success: false,
       hideLogo: false,
       borderFrame: false,
-      iconToggle: false,
-      frameColor: "#ffffff",
+      frameColor: "",
     };
   },
   created() {
@@ -183,12 +201,12 @@ export default {
     });
   },
   methods: {
-    // async fetchData() {
-    //   var design = this.$route.params.id;
-    //   Graphic.details(design).then((response) => {
-    //     this.design = response.data;
-    //   });
-    // },
+    async fetchData() {
+      var design = this.$route.params.id;
+      Graphic.details(design).then((response) => {
+        this.design = response.data;
+      });
+    },
     saveCanvas() {
       html2canvas(document.getElementById("capture"), {
         // allowTaint: true,
@@ -274,10 +292,6 @@ export default {
       this.borderFrame = !this.borderFrame;
       this.$emit("setCheckboxVal", this.borderFrame);
     },
-    toggleIcons() {
-      this.iconToggle = !this.iconToggle;
-      this.$emit("setCheckboxVal", this.iconToggle);
-    },
   },
   watch: {
     frameColor(newValue) {
@@ -285,7 +299,7 @@ export default {
     },
   },
   mounted() {
-    // this.fetchData();
+    this.fetchData();
   },
 };
 </script>
@@ -351,5 +365,4 @@ input:checked + .slider:before {
   font-size: 8px;
   font-weight: 600;
 }
-
 </style>

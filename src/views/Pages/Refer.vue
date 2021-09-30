@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen w-full">
     <div class="flex items-center justify-between mb-5 p-3">
-      <button class="flex items-center gap-2" @click="$router.go(-1)">
+      <button class="flex items-center gap-2 shadow-md rounded-lg p-2" @click="$router.go(-1)">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5"
@@ -23,8 +23,7 @@
       <img src="../../assets/refer.svg" class="h-72" />
       <div class="text-xl font-bold mt-6">Invite your friends</div>
       <div class="text-sm text-gray-500 mt-2 text-center">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-        blanditiis laudantium fugit sapiente.
+        Invite your friends to download the app.
       </div>
 
       <div class="link flex mt-12">
@@ -37,7 +36,7 @@
             text-center text-gray-500 text-sm
           "
         >
-          http:agentsnest.com
+          AgentsNest App
         </div>
         <button
           class="text-white rounded-r-lg px-4 text-sm"
@@ -63,7 +62,7 @@ export default {
   },
   methods: {
     doCopy() {
-      copyText("www.agentsnest.com", undefined, (error, event) => {
+      copyText("https://play.google.com/store/apps/details?id=com.agentsnest.app", undefined, (error, event) => {
         if (error) {
           alert("Can not copy");
           console.log(error);

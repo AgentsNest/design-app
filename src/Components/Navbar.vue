@@ -120,7 +120,7 @@
                 d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
               />
             </svg>
-            <div class="ml-3 text-gray-800 font-bold">Home</div>
+            <div class="ml-3 text-gray-800">Home</div>
           </router-link>
 
           <router-link :to="{ name: 'profile' }" class="flex">
@@ -138,10 +138,10 @@
                 d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
               />
             </svg>
-            <div class="ml-3 text-gray-800 font-bold">Profile</div>
+            <div class="ml-3 text-gray-800">Profile</div>
           </router-link>
 
-          <router-link :to="{ name: 'graphics' }" class="flex">
+          <a href="https://play.google.com/store/apps/details?id=com.agentsnest.app" class="flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-5 w-5 text-gray-500"
@@ -156,8 +156,8 @@
                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
-            <div class="ml-3 text-gray-800 font-bold">Rate the app</div>
-          </router-link>
+            <div class="ml-3 text-gray-800">Rate the app</div>
+          </a>
 
           <button @click.prevent="logout" class="flex">
             <svg
@@ -174,7 +174,7 @@
                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
               />
             </svg>
-            <div class="ml-3 text-gray-800 font-bold">Logout</div>
+            <div class="ml-3 text-gray-800">Logout</div>
           </button>
         </div>
 
@@ -196,7 +196,7 @@
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <div class="ml-3 text-gray-800 font-bold">Tell a Friend</div>
+            <div class="ml-3 text-gray-800">Tell a Friend</div>
           </router-link>
 
           <router-link :to="{ name: 'feedback' }" class="flex">
@@ -214,7 +214,7 @@
                 d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
               />
             </svg>
-            <div class="ml-3 text-gray-800 font-bold">Help and Feedback</div>
+            <div class="ml-3 text-gray-800">Help and Feedback</div>
           </router-link>
         </div>
       </div>
@@ -244,6 +244,7 @@ export default {
       this.isOpen = !this.isOpen;
     },
     logout() {
+      localStorage.removeItem("token");
       User.logout().then(() => {
         localStorage.removeItem("token");
         this.isLoggedIn = false;

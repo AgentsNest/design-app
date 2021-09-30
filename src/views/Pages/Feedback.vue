@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen w-full">
     <div class="flex items-center justify-between mb-5 p-3">
-      <button class="flex items-center gap-2" @click="$router.go(-1)">
+      <button class="flex items-center gap-2 shadow-md rounded-lg p-2" @click="$router.go(-1)">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5"
@@ -28,23 +28,51 @@
       </div>
     </div>
 
-    <div class="link mt-12 px-20">
+    <div class="link mt-8 px-10">
       <textarea
         class="bg-gray-100 rounded-l-lg py-2 px-4 text-sm w-full"
         placeholder="Your feedback"
         rows="5"
+        v-model="message"
       ></textarea>
       <button
-        class="bg-blue-800 text-white rounded px-4 py-2 mt-4 text-sm w-full"
+        class="text-white rounded px-4 py-2 mt-4 text-sm w-full"
+        :class="
+            success
+              ? 'bg-gradient-to-r from-blue-700 via-indigo-800 to-indigo-900'
+              : 'bg-gray-500'
+          "
+        @click="SendFeedback"
       >
-        Send
+        {{btnText}}
       </button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import Pages from '../../Apis/Pages'
+export default {
+  data(){
+    return{
+      message: '',
+      btnText: 'Send',
+      success: false
+    }
+  },
+  methods:{
+    SendFeedback(){
+      let data = new FormData();
+      data.append('message', this.message)
+
+      Pages.new(data).then((response) => {
+        console.log(response);
+        this.success = true
+        this.btnText = 'Sent Successfully!'
+      })
+    }
+  }
+};
 </script>
 
 <style></style>
