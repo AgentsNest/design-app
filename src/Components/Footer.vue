@@ -1,19 +1,23 @@
 <template>
-  <div class="fixed bottom-5 left-0 right-0 px-4">
+  <div class="fixed bottom-4 left-0 right-0 px-4">
     <footer
-      class="flex justify-between px-6 py-4 items-center bg-gray-900 rounded-xl"
+      class="flex justify-between px-6 py-3 items-center bg-gray-900 rounded-xl"
     >
       <router-link
-        :to="{ name: 'graphics' }"
-        class="text-white items-center flex flex-col"
+        to="/"
+        class="text-gray-600 items-center flex flex-col"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+        </svg>
+        <span>Home</span>
+      </router-link>
+
+      <router-link
+        :to="{ name: 'graphics' }"
+        class="text-gray-600 items-center flex flex-col"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -24,13 +28,13 @@
         <span>Designs</span>
       </router-link>
 
-      <router-link
+      <!-- <router-link
         :to="{ name: 'graphics' }"
         class="text-gray-600 items-center flex flex-col"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
+          class="h-5 w-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -43,15 +47,15 @@
           />
         </svg>
         <span>Leads</span>
-      </router-link>
+      </router-link> -->
 
-      <router-link
+      <!-- <router-link
         :to="{ name: 'graphics' }"
         class="text-gray-600 items-center flex flex-col"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
+          class="h-5 w-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -64,32 +68,21 @@
           />
         </svg>
         <span>Content</span>
-      </router-link>
+      </router-link> -->
 
       <router-link
-        :to="{ name: 'graphics' }"
+        :to="{ name: 'myclients' }"
         class="text-gray-600 items-center flex flex-col"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1"
-            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
-        <span>Locker</span>
+        <span>Clients</span>
       </router-link>
 
       <router-link
-        :to="{ name: 'allLeads' }"
-        class="text-white items-center flex flex-col"
+        :to="{ name: 'profile' }"
+        class="text-gray-600 items-center flex flex-col"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -105,21 +98,37 @@
         </svg>
         <span>Profile</span>
       </router-link>
+
     </footer>
   </div>
 </template>
 
 <script>
+import User from "../Apis/User";
+
 export default {
   components: {},
   data() {
-    return {};
+    return {
+      isLoggedIn: false
+    };
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("token");
+      User.logout().then(() => {
+        localStorage.removeItem("token");
+        this.isLoggedIn = false;
+        // this.$router.push({ name: "Login" });
+        this.$router.go(this.$router.currentRoute)
+      });
+    },
   },
 };
 </script>
 
 <style scoped>
-/* .router-link-active {
+ .router-link-active {
   color: #ffffff;
-} */
+} 
 </style>

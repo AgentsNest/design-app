@@ -1,10 +1,10 @@
 <template>
-  <nav class="text-gray-800 font-light mb-3">
+  <nav class="text-gray-800 font-light fixed top-0 left-0 right-0 px-4 py-3 bg-white z-10">
     <div class="flex justify-between">
       <button @click="drawer" class="flex items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
+          class="h-5 w-5 text-gray-600"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -19,7 +19,7 @@
         <span class="font-bold ml-3 text-lg">agnt.</span>
       </button>
 
-      <button @click.prevent="logout">
+      <!-- <button @click.prevent="logout">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5"
@@ -34,7 +34,7 @@
             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
           />
         </svg>
-      </button>
+      </button> -->
 
       <!-- <div class="flex items-center gap-1">
         <notification-component></notification-component>
@@ -92,12 +92,12 @@
     @click="drawer"
   >
     <div class="drawer-box bg-white w-3/4 p-6 shadow-xl">
-      <div class="flex flex-col items-center gap-6">
-        <img class="h-12 rounded-xl mr-3" :src="agent.brand_logo" />
+      <div class="flex flex-col items-center gap-4">
+        <img class="h-12 rounded-xl" :src="agent.brand_logo" />
         <div class="text-center">
           <div class="font-bold text-xl">{{ agent.name }}</div>
           <div class="text-sm">{{ agent.email }}</div>
-          <div class="text-gray-300 text-xs">Free member</div>
+          <div class="text-gray-300 text-xs p-1 mt-1 border rounded-lg">Free member</div>
         </div>
       </div>
 
@@ -122,6 +122,13 @@
             </svg>
             <div class="ml-3 text-gray-800">Home</div>
           </router-link>
+
+          <!-- <router-link :to="{ name: 'myclients' }" exact class="flex">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <div class="ml-3 text-gray-800">My Clients</div>
+          </router-link> -->
 
           <router-link :to="{ name: 'profile' }" class="flex">
             <svg
@@ -217,6 +224,15 @@
             <div class="ml-3 text-gray-800">Help and Feedback</div>
           </router-link>
         </div>
+
+        <hr class="my-6" />
+
+        <div class="space-y-3">
+            <button class="rounded-xl py-3 shadow-inner w-full text-red-400 px-4 bg-red-100">Free Plan Expires in <span class="font-bold">{{agent.trial_until}} days</span></button>
+            <div class="text-xs text-gray-500">if you want learn more about the product and features, please reach out to <span class="font-bold text-gray-700">hello@blackbyt.com</span> or get a   <span class="font-bold text-gray-700">free 1-1 demo</span> now.</div>
+        </div>
+
+
       </div>
     </div>
   </aside>
@@ -236,7 +252,8 @@ export default {
   },
   created() {
     User.auth().then((response) => {
-      this.agent = response.data;
+      this.agent = response.data.data;
+      // console.log(response.data)
     });
   },
   methods: {

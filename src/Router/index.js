@@ -53,14 +53,27 @@ const routes = [
   // Design Graphics Routes
   {
     path: "/graphics",
-    component: () => import("../views/Graphics/Index.vue"),
+    component: () => import("../views/Designs/Index.vue"),
     name: "graphics",
     meta: { authOnly: true },
   },
   {
     path: "/graphic/:id",
-    component: () => import("../views/Graphics/Preview.vue"),
+    component: () => import("../views/Designs/Preview.vue"),
     name: "previewGraphic",
+    meta: { authOnly: true },
+  },
+  // My Clients
+  {
+    path: "/clients",
+    component: () => import("../views/Clients/Index.vue"),
+    name: "myclients",
+    meta: { authOnly: true },
+  },
+  {
+    path: "/clients/:id",
+    component: () => import("../views/Clients/Single.vue"),
+    name: "singleClient",
     meta: { authOnly: true },
   },
 ];

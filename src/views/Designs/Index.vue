@@ -1,16 +1,16 @@
 <template>
   <Layout>
-    <div class="my-pdfs w-full relative ">
+    <div class="my-pdfs w-full relative mt-10">
       <!-- content start -->
       <div class="mb-2 grid grid-cols-2 gap-4">
         <div
-          class="bg-white shadow rounded-md h-36"
+          class="bg-white shadow rounded-md h-40"
           v-for="graphic in graphics"
           :key="graphic"
         >
-          <!-- <router-link :to="{ name: 'previewGraphic', params: { id: graphic.id } }"> -->
-            <Card :graphic='graphic' @click="singleGraphic(graphic.id)" />
-          <!-- </router-link> -->
+          <router-link :to="{ name: 'previewGraphic', params: { id: graphic.id } }">
+            <Card :graphic='graphic' />
+          </router-link>
         </div>
       </div>
       <div class="w-full mt-4" v-if="loadMoreBtn">
@@ -20,19 +20,6 @@
       </div>
     </div>
 
-    <!-- Single Graphic Modal -->
-    <div class="fixed bg-white top-0 h-full left-0 right-0" v-if="single">
-      <div class="flex p-5">
-        <button @click="single = false" class="shadow-md p-2 rounded-md">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
-          </svg>
-        </button>
-      </div>
-      <Preview :design='design' />
-
-    </div>
-
   </Layout>
 </template>
 
@@ -40,10 +27,9 @@
 import Graphic from "../../Apis/Graphic";
 import Layout from "../../Layout/layout.vue";
 import Card from './Card.vue'
-import Preview from './Preview.vue'
 
 export default {
-  components: { Layout, Card, Preview },
+  components: { Layout, Card },
   data() {
     return {
       graphics: [],
@@ -51,7 +37,6 @@ export default {
       loadMoreBtn: true,
       page: 1,
       last_page : null,
-      single: false
     };
   },
   methods: {

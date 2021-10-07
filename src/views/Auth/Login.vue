@@ -25,7 +25,7 @@
         required
       />
       <div
-        class="bg-white absolute right-3 px-2 top-0 text-xs text-red-400"
+        class="bg-white absolute right-16 px-2 -top-3 text-xs text-red-400"
         v-if="errors.email"
       >
         {{ errors.email[0] }}
@@ -59,11 +59,11 @@
       </div> -->
     </div>
 
-    <div class="flex justify-between text-blue-800 text-sm px-3 mt-5">
+    <div class="flex justify-between text-blue-800 text-xs  mt-5">
       <button class="text-gray-500" @click="secure = !secure">
         Show password
       </button>
-      <!-- <div>Forgot Password?</div> -->
+      <!-- <div><router-link :to="{name: 'Forgot'}">Forgot Password?</router-link></div> -->
     </div>
 
     <button

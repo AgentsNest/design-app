@@ -124,9 +124,6 @@
             />
           </svg>
         </div>
-        <div class="mt-2 text-xs text-red-400" v-if="errors.confirm_password">
-          {{ errors.confirm_password[0] }}
-        </div>
       </div>
       <div class="mt-10">
         <button
